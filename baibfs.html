@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    // Định nghĩa đồ thị
+class Graph {
+  constructor() {
+    this.adjList = new Map();
+  }
+
+  addVertex(vertex) {
+    if (!this.adjList.has(vertex)) {
+      this.adjList.set(vertex, []);
+    }
+  }
+
+  addEdge(vertex1, vertex2) {
+    this.adjList.get(vertex1).push(vertex2);
+    this.adjList.get(vertex2).push(vertex1); // Nếu đồ thị có hướng, hãy bỏ dòng này.
+  }
+
+  bfs(startingNode) {
+    const visited = new Set();
+    const queue = [];
+    visited.add(startingNode);
+    queue.push(startingNode);
+
+    while (queue.length > 0) {
+      const currentVertex = queue.shift();
+      console.log(currentVertex);
+
+      const neighbors = this.adjList.get(currentVertex);
+      for (const neighbor of neighbors) {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+          queue.push(neighbor);
+        }
+      }
+    }
+  }
+}
+
+// Sử dụng đồ thị và thực hiện BFS
+const graph = new Graph();
+const vertices = ['A', 'B', 'C', 'D', 'E', 'F'];
+for (const vertex of vertices) {
+  graph.addVertex(vertex);
+}
+
+graph.addEdge('A', 'B');
+graph.addEdge('A', 'C');
+graph.addEdge('B', 'D');
+graph.addEdge('B', 'E');
+graph.addEdge('C', 'F');
+
+console.log("BFS traversal starting from vertex A:");
+graph.bfs('A');
+</script>
+</body>
+</html>
